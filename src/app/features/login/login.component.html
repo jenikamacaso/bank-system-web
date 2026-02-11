@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="card">
+    <h2>Login</h2>
+
+    <form (ngSubmit)="login()">
+      <div class="field">
+        <label>Username</label>
+        <input type="text" name="username" [(ngModel)]="form().username" required />
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="password" [(ngModel)]="form().password" required />
+      </div>
+
+      <div class="error" *ngIf="errorMessage()">
+        {{ errorMessage() }}
+      </div>
+
+      <div class="actions">
+        <button type="submit" [disabled]="isLoading()">
+          {{ isLoading() ? 'Logging in...' : 'Login' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<div class="container">
+  <div>
+    <!-- Header -->
+    <div class="header">
+      <h2>Bank Accounts</h2>
+
+      <div class="actions">
+        <button class="btn btn-primary" (click)="create()">+ Create</button>
+        <button class="btn btn-secondary" (click)="logout()">Logout</button>
+      </div>
+    </div>
+
+    <!-- Error -->
+    <div class="error" *ngIf="errorMessage()">
+      {{ errorMessage() }}
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" *ngIf="isLoading()">Loading accounts...</div>
+
+    <!-- Table -->
+    <table *ngIf="!isLoading() && accounts().length" class="accounts-table">
+      <thead>
+        <tr>
+          <th>Account #</th>
+          <th>Customer</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Date Created</th>
+          <th class="center">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let account of accounts()">
+          <td class="mono">{{ account.accountNumber }}</td>
+          <td>{{ account.customerName }}</td>
+          <td>{{ account.accountType }}</td>
+          <td>
+            <span
+              class="status"
+              [class.active]="account.accountStatus === 'Active'"
+              [class.closed]="account.accountStatus === 'Closed'"
+            >
+              {{ account.accountStatus }}
+            </span>
+          </td>
+
+          <td>{{ account.dateCreated | date: 'short' }}</td>
+          <td class="center">
+            <button class="btn btn-edit" (click)="edit(account.accountNumber)">Edit</button>
+            <button class="btn btn-delete" (click)="delete(account.accountNumber)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Empty State -->
+    <div class="empty" *ngIf="!isLoading() && accounts().length === 0">No accounts found.</div>
+  </div>
+</div>

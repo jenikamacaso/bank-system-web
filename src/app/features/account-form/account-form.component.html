@@ -1,0 +1,59 @@
+<div class="container">
+  <h2>
+    {{ isEditMode() ? 'Edit Bank Account' : 'Create Bank Account' }}
+  </h2>
+
+  <div *ngIf="isLoading()">Loading account...</div>
+
+  <form *ngIf="!isLoading()" (ngSubmit)="save()" #f="ngForm">
+    <!-- Account Number -->
+    <div class="field">
+      <label>Account Number</label>
+      <input
+        type="text"
+        name="accountNumber"
+        [(ngModel)]="form.accountNumber"
+        required
+        [disabled]="isEditMode()"
+      />
+    </div>
+
+    <!-- Customer Name -->
+    <div class="field">
+      <label>Customer Name</label>
+      <input type="text" name="customerName" [(ngModel)]="form.customerName" required />
+    </div>
+
+    <!-- Account Type -->
+    <div class="field">
+      <label>Account Type</label>
+      <select name="accountType" [(ngModel)]="form.accountType">
+        <option value="Savings">Savings</option>
+        <option value="Checking">Checking</option>
+      </select>
+    </div>
+
+    <!-- Account Status -->
+    <div class="field">
+      <label>Status</label>
+      <select name="accountStatus" [(ngModel)]="form.accountStatus">
+        <option value="Active">Active</option>
+        <option value="Closed">Closed</option>
+      </select>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error" *ngIf="errorMessage()">
+      {{ errorMessage() }}
+    </div>
+
+    <!-- Buttons -->
+    <div class="actions">
+      <button type="submit" [disabled]="f.invalid || isSaving()">
+        {{ isSaving() ? 'Saving...' : 'Save' }}
+      </button>
+
+      <button type="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</div>
